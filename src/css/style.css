@@ -1,0 +1,40 @@
+.container {
+  /* width: 1440px; */
+  margin: auto;
+}
+.search-container {
+  /* text-align: center; */
+  margin-top: 50px;
+  margin-left: 50px;
+}
+
+.country-input {
+  /* margin-right: 20px; */
+  padding: 10px;
+  border: 2px solid rgb(121, 194, 162);
+  border-radius: 10px;
+}
+
+/* ----------------------------- Карточка страны ---------------------------- */
+.card {
+  display: flex;
+  margin-top: 50px;
+  margin-left: 50px;
+  /* justify-content: center; */
+}
+
+/* .card-body {
+  margin-right: 200px;
+} */
+
+.card-title-country {
+  margin-bottom: 100px;
+}
+
+.card-title-city {
+  margin-bottom: 20px;
+}
+
+.card-text {
+  margin-bottom: 15px;
+}
