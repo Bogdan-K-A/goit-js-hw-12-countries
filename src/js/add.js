@@ -1,50 +1,55 @@
-import showError from './error.js';
-import fetchCountries from './fetchCountries.js';
-import countryCard from '../templates/country-card.hbs';
-import countryList from '../templates/country-list.hbs';
-import refs from './refs.js';
 import debounce from 'lodash.debounce';
+import fetchCountries from './fetchCountries.js';
+import countryCardTpl from '../templates/country-card.hbs';
+import countryListTpl from '../templates/country-list.hbs';
+import refs from './refs.js';
+const { cardInfo, searchForm } = refs;
+import '@pnotify/core/dist/BrightTheme.css';
+const { error } = require('@pnotify/core');
 
-refs.input.addEventListener('input', debounce(searchInput, 500));
+refs.searchForm.addEventListener('input', debounce(onSearch, 1000));
 
-function searchInput(e) {
+/* -----------------------------функция инпута приносит данные ---------------------------- */
+
+function onSearch(e) {
   e.preventDefault();
-
-  const searchQuery = getQuery();
-
-  if (!searchQuery) {
-    return;
-  }
+  let searchQuery = e.target.value;
 
   fetchCountries(searchQuery)
     .then(data => {
-      refs.cardInfo.innerHTML = '';
       if (data.length > 10) {
-        return showError('Too many mathces found');
-      } else if (data.length > 2 && data.length <= 10) {
-        showCountriList(data);
+        error({
+          text: 'Too many matches found. Please enter a more specific query!',
+        });
+      } else if (data.status === 404) {
+        error({
+          text: 'No countryhas been found.',
+        });
+      } else if (data.length === 1) {
+        renderCountriCard(data);
+      } else if (data.length <= 10) {
+        renderCountryList(data);
       }
-      showCountriCard(data);
     })
     .catch(error => {
-      if (error === 404) {
-        showError('No matches were found! Check your spelling.');
-      } else {
-        showError('Oops! Something went wrong. Try again.');
-      }
+      Error({
+        text: 'You must enter query parameters!',
+      });
     });
 }
 
-function getQuery() {
-  return refs.input.value;
+/* ---------------------------- рендерит разметку --------------------------- */
+function renderCountriCard(data) {
+  const cardMarkup = countryCardTpl(data);
+  refs.cardInfo.innerHTML = cardMarkup;
 }
 
-function showCountriList(data) {
-  const countryListMarkup = countryList(data);
-  refs.cardInfo.insertAdjacentHTML('beforeend', countryListMarkup);
+function renderCountryList(data) {
+  const cardMarkup = countryListTpl(data);
+  refs.cardInfo.innerHTML = cardMarkup;
 }
-
-function showCountriCard(data) {
-  const cardCountryMarkup = countryCard(data[0]);
-  refs.cardInfo.insertAdjacentHTML('beforeend', cardCountryMarkup);
-}
+/* ---------------------------- очистка инпута --------------------------- */
+// function clearInput() {
+//   refs.searchForm.textContent = '';
+// }
+// ================================================

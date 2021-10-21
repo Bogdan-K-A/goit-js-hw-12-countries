@@ -1,18 +1,5 @@
-import { alert } from '@pnotify/core';
-import axios from 'axios';
+const BASE_URL = 'https://restcountries.com/v2/name/';
 
 export default function fetchCountries(searchQuery) {
-  return axios
-    .get(`https://restcountries.com/v2/name/${searchQuery}`)
-    .then(response => response.json())
-    .then(result => {
-      if (result.status === 404) {
-        alert({
-          type: 'error',
-          text: 'No matches find',
-        });
-      }
-      return result;
-    })
-    .catch(error => error);
+  return fetch(BASE_URL + `${searchQuery}`).then(response => response.json());
 }

@@ -1,4 +1,4 @@
-const cardInfo = document.querySelector('.card');
-const input = document.querySelector('.country-input');
-
-export default { cardInfo, input };
+export default {
+  cardInfo: document.querySelector('.js-card'),
+  searchForm: document.querySelector('.js-search-form'),
+};
