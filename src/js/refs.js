@@ -1,4 +1,4 @@
 export default {
   cardInfo: document.querySelector('.js-card'),
-  searchForm: document.querySelector('.js-search-form'),
+  searchForm: document.querySelector('.country-input'),
 };
