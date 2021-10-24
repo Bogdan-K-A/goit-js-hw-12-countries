@@ -3,7 +3,7 @@ import fetchCountries from './fetchCountries.js';
 import countryCardTpl from '../templates/country-card.hbs';
 import countryListTpl from '../templates/country-list.hbs';
 import refs from './refs.js';
-const { cardInfo, searchForm } = refs;
+const { searchForm } = refs;
 
 import '@pnotify/core/dist/BrightTheme.css';
 const { error } = require('@pnotify/core');
